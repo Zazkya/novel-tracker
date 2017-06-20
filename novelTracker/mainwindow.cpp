@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent) :
     db.createTable();
 
     QList<QString> statusList;
-    statusList << "All" << "Ongoing" << "Hiatus" << "Ended";
+    statusList << "Recent" << "All" << "Ongoing" << "Hiatus" << "Ended" ;
     ui->statusBox->addItems(statusList);
     this->tableSetup();
     on_viewButton_clicked();
@@ -77,6 +77,13 @@ void MainWindow::panelSetup(){
 QSqlQueryModel *MainWindow::tableQuery(){
    QSqlQueryModel *model = new QSqlQueryModel();
    model->setQuery(db.queryStatus(currentStatus));
+   model->setHeaderData(0, Qt::Horizontal, "Title");
+   model->setHeaderData(1, Qt::Horizontal, "Status");
+   model->setHeaderData(2, Qt::Horizontal, "Chapter");
+   model->setHeaderData(3, Qt::Horizontal, "Date Added");
+   model->setHeaderData(4, Qt::Horizontal, "Date Modified");
+   model->setHeaderData(5, Qt::Horizontal, "Site");
+   model->setHeaderData(6, Qt::Horizontal, "Note");
    return model;
 }
 

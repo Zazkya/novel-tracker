@@ -114,6 +114,18 @@ QSqlQuery dbManager::queryStatus(QString status){
        qDebug()<<"all";
        return this->queryAll();
    }
+   else if (status == "Recent") {
+       QSqlQuery query;
+       query.prepare("SELECT title, status, chapter, dateAdded, dateModified, site, note FROM novelTable WHERE dateModified >= (:date)");
+       QDate date;
+       date = QDate::currentDate();
+       date.addDays(-7);
+       QString date_string;
+       date_string = date.toString("dd/MM/yyyy");
+       query.bindValue(":date", date_string);
+       query.exec();
+       return query;
+   }
    else{
        QSqlQuery query;
        query.prepare("SELECT title, status, chapter, dateAdded, dateModified, site, note FROM novelTable WHERE status = (:status)");
