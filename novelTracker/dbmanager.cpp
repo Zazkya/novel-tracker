@@ -119,9 +119,14 @@ QSqlQuery dbManager::queryStatus(QString status){
        query.prepare("SELECT title, status, chapter, dateAdded, dateModified, site, note FROM novelTable WHERE dateModified >= (:date)");
        QDate date;
        date = QDate::currentDate();
-       date.addDays(-7);
+       int i = -7;
+       qDebug()<<i;
+       QDate nDate = date.addDays(i);
+
+       qDebug()<<nDate;
        QString date_string;
-       date_string = date.toString("dd/MM/yyyy");
+       date_string = nDate.toString("dd/MM/yyyy");
+       qDebug()<<date_string;
        query.bindValue(":date", date_string);
        query.exec();
        return query;
